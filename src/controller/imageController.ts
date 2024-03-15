@@ -19,7 +19,7 @@ export const imgController = {
     }
     return SuccessUserReq(res, "file uploaded successfully");
   },
-};
+}; 
 
 //Display images
 export const getUploadedImages = (callback) => {
@@ -133,83 +133,77 @@ export const ImgDownloadController = {
   },
 };
 
-//apply filter to images by blur and grayscale
+
+//Apply blur filter to an image 
+const applyBlurFilter=async(imagePath:string,filterImgPath:string, blurLevel: number)=>{
+await sharp(imagePath).blur(blurLevel).toFile(filterImgPath);
+}
+//Apply grayscale filter to an image 
+const applyGrayScaleFilter=async(imagePath:string,filterImgPath:string)=>{
+await sharp(imagePath).grayscale().toFile(filterImgPath);
+}
+
 export const ImgFilterController = {
   applyFilterImg: async (req: Request, res: Response) => {
     try {
-      const { filter } = req.body;
-      if (!filter) {
-        return BadClientReq(res, "Invalid filter provided");
-      } else {
-        //   let filterImgAction = sharp.Sharp;
-        switch (filter) {
-          case "grayscale":
-            sharp(`req.file.path`)
-              .grayscale()
-              .toFile(`file-${req.file.filename}`);
-            break;
-          case "blur":
-            sharp(`req.file.path`).blur().toFile(`file-${req.file.filename}`);
-          default:
-            return BadClientReq(res, "Invalid filter type.");
-        }
+      const { filter, imageUrl, blurLevel } = req.query;
+      console.log("imageUrl", imageUrl);
+      console.log("blurLevel", blurLevel);
+
+      if (!filter || !imageUrl) {
+        return BadClientReq(res, "Invalid filter or imageUrl provided");
       }
-      return SuccessUserReq(
-        res,
-        "Filter type is supported and successfully applied."
-      );
+
+      console.log("Image URL:", imageUrl);
+      const { imagePath, filename } = ProcessPath(imageUrl as string);
+      const filterFilename = `filter-${filename}`;
+      const filterImagePath = path.join(__dirname, "../uploads", filterFilename);
+
+      switch (filter) {
+        case "grayscale":
+          await applyGrayScaleFilter(imagePath, filterImagePath);
+          break;
+        case "blur":
+       
+          await applyBlurFilter(imagePath, filterImagePath, parseInt(blurLevel || "0"));
+          break;
+        default:
+          return BadClientReq(res, "Invalid filter type.");
+      }
+
+      return res.render("detail", { imageUrl: `../uploads/${filterFilename}` });
     } catch (error) {
+      console.error("Error applying filter:", error);
       return BadServerReq(res, error);
     }
   },
 };
-
-//watermark to images
 export const ImgWaterMArkController = {
   waterMarkImg: async (req: Request, res: Response) => {
-    try {
-      const { top, left } = req.body;
-      const imgFile = req.file.path;
-      await sharp(imgFile)
-        .composite([
-          {
-            input: imgFile,
-            top: parseInt(top),
-            left: parseInt(left),
-            gravity: "southeast",
-          },
-        ])
-        .toFile(`watermarked-${req.file.filename}`);
-      return SuccessUserReq(res, "Watermark applied successfully.");
-    } catch (error) {
-      return BadServerReq(res, error);
-    }
+      try {
+          const { top, left, text, imageUrl } = req.body;
+
+          if (!top || !left || !text || !imageUrl) {
+              return BadClientReq(res, "Invalid parameters or no imageUrl provided");
+          }
+
+          console.log("Image URL:", imageUrl);
+          const { imagePath, filename } = ProcessPath(imageUrl as string);
+          const filterFilename = `watermark-${filename}`;
+          const filterImagePath = path.join(__dirname, "../uploads", filterFilename);
+
+          await sharp(imagePath)
+              .composite([
+                  {
+                      input: Buffer.from(`<svg><text x="${left}" y="${top}" font-family="Arial" font-size="16" fill="white">${text}</text></svg>`),
+                      gravity: "southeast",
+                  },
+              ])
+              .toFile(filterImagePath);
+
+          return res.render("detail", { imageUrl: `../uploads/${filterFilename}` });
+      } catch (error) {
+          return BadServerReq(res, error);
+      }
   },
-};
-export const processImg = async (req: Request, res: Response) => {
-  try {
-    const { action } = req.body;
-    switch (action) {
-      case "resize":
-        await ImgResizeController.resizeImg(req, res);
-        break;
-      case "crop":
-        await ImgCroppedController.cropImg(req, res);
-        break;
-      case "download":
-        await ImgDownloadController.downloadImg(req, res);
-        break;
-      case "filter":
-        await ImgFilterController.applyFilterImg(req, res);
-        break;
-      case "watermark":
-        await ImgWaterMArkController.waterMarkImg(req, res);
-        break;
-      default:
-        res.status(404).json({ message: "Invalid Action " });
-    }
-  } catch (error) {
-    console.error("error", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
 };

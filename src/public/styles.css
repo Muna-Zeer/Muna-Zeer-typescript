@@ -3,7 +3,7 @@ body {
     padding: 0;
     box-sizing: border-box;
     font-family: 'Times New Roman', Times, serif;
-    height: 100vh;
+    /* height: 100vh; */
 }
 
 .sidebar {
@@ -68,9 +68,9 @@ footer {
 
 /* Center the image */
 .uploadedImages {
-    /* display: flex;
+    display: flex;
   justify-content: center;
-  align-items: center; */
+  align-items: center;
   height: 100vh;
   }
 

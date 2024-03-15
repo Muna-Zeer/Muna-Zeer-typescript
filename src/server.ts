@@ -17,19 +17,21 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/images', ImgRouter);
 
 app.get('/', (req, res) => {
-    getUploadedImages((err, fileUrls) => {
+  getUploadedImages((err, fileUrls) => {
       if (err) {
-        console.log("Error reading fileUrls", err);
-        return res.status(500).send("Error while reading fileUrls");
+          console.log("Error reading fileUrls", err);
+          return res.status(500).send("Error while reading fileUrls");
       }
-      res.render("index", { fileUrls }); 
+      res.render("index", { fileUrls, imageUrl: req.query.image }); 
       console.log("Read fileUrls successfully", fileUrls);
-    });
+  });
 });
+
 app.get('/detail', (req, res) => {
-    const imageUrl=req.query.image;
-    res.render('detail',{imageUrl}); 
+  const imageUrl = req.query.image;
+  res.render('detail', { imageUrl });
 });
+
 
 
 const PORT = process.env.PORT || 3000;
