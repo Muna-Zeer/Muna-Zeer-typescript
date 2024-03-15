@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <aside class="sidebar">
+        <ul>
+            <li><a href="#">Main Features</a></li>
+            <li>
+                <form action="/images/upload" method="post" enctype="multipart/form-data">
+                    <label for="imageUpload">Image Upload</label>
+                    <input id="imageUpload" type="file" name="image">
+                    <input type="submit" value="Upload">
+                </form>
+            </li>
+            
+            <li> 
+                <form action="/images/resize" method="post">
+                <label for="width">Width:</label>
+                <input type="text" id="width" name="width">
+                <label for="height">Height:</label>
+                <input type="text" id="height" name="height">
+                <input type="hidden" name="imageUrl" value="<%= imageUrl %>">
+                <input type="submit" value="Resize">
+            </form>
+            
+            
+            </li>
+            <li> <form action="/images/crop" method="post">
+                <label for="width">Width:</label>
+                <input type="text" id="width" name="width">
+                <label for="height">Height:</label>
+                <input type="text" id="height" name="height">
+                <label for="top">Top:</label>
+                <input type="text" id="top" name="top">
+                <label for="left">Left:</label>
+                <input type="text" id="left" name="left">
+                <input type="hidden" name="imageUrl" value="<%= imageUrl %>">
+                <input type="submit" value="Crop">
+            </form></li>
+            <li>
+                <a href="/images/download?imageUrl=<%=imageUrl%>">
+                    <button>Image Download</button> 
+                </a>
+            </li>
+            
+            <li><a href="/process?action=filter">Image Filtering</a></li>
+            <li><a href="/process?action=watermark">Image Watermarking</a></li>
+        </ul>
+    </aside>
+    
+</body>
+</html>
