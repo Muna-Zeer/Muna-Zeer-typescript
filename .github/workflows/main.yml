@@ -1,0 +1,29 @@
+name: Muna Testing
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+       #install independences
+      - name: Install Node.js and npm
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+          
+      - name:
+           Install dependencies
+        run: npm install
+
+        #Run test
+      - name: Run unit tests
+        run: npm test
+         
+           
