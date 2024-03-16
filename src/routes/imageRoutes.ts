@@ -2,7 +2,6 @@ import express from "express";
 import { imgController,ImgResizeController,ImgCroppedController, ImgDownloadController,
     ImgFilterController,ImgWaterMArkController
 } from "../controller/imageController";
-import { getUploadedImages } from "../controller/imageController";
 
 import path from "path";
 import multer from "multer";

@@ -1,15 +1,11 @@
 const fs = require("fs");
 import sharp from "sharp";
-// import multer from "multer";
 import path from "path";
 
-import { Request, Response } from "express";
-import {
-  BadServerReq,
-  BadClientReq,
-  SuccessUserReq,
-} from "../utils/errorHandler";
-//upload img by user
+import { Request, Response } from 'express';
+
+import { BadClientReq, SuccessUserReq,BadServerReq } from "../utils/errorHandler";
+
 export const imgController = {
   uploadImage: (req: Request, res: Response) => {
     console.log("req.file", req.file);
@@ -19,10 +15,10 @@ export const imgController = {
     }
     return SuccessUserReq(res, "file uploaded successfully");
   },
-}; 
+};
 
 //Display images
-export const getUploadedImages = (callback) => {
+export const getUploadedImages = (callback:Function) => {
   const uploadDir = path.join(__dirname, "../uploads");
 
   fs.readdir(uploadDir, (err, files) => {
@@ -36,7 +32,7 @@ export const getUploadedImages = (callback) => {
   });
 };
 
-const ProcessPath = (imageUrl) => {
+const ProcessPath = (imageUrl: string) => {
   if (!imageUrl) {
     throw new Error("No image URL provided");
   }
@@ -69,8 +65,8 @@ export const ImgResizeController = {
 
       await sharp(imagePath)
         .resize({
-          width: parseInt(width),
-          height: parseInt(height),
+          width: parseInt(width as string),
+          height: parseInt(height as string),
         })
         .toFile(resizedImagePath);
 
@@ -101,10 +97,10 @@ export const ImgCroppedController = {
       );
       await sharp(imagePath)
         .extract({
-          left: parseInt(left),
-          top: parseInt(top),
-          width: parseInt(width),
-          height: parseInt(height),
+          left: parseInt(left as string),
+          top: parseInt(top as string),
+          width: parseInt(width as string),
+          height: parseInt(height as string),
         })
         .toFile(croppedImagePath);
       return res.render("detail", { imageUrl: `/uploads/${croppedFilename}` });
@@ -118,7 +114,7 @@ export const ImgCroppedController = {
 export const ImgDownloadController = {
   downloadImg: async (req: Request, res: Response) => {
     try {
-      const imageUrl: string = req.query.imageUrl;
+      const imageUrl: string = req.query.imageUrl as string;
       const { imagePath } = ProcessPath(imageUrl);
 
       if (!imagePath) {
@@ -146,7 +142,11 @@ await sharp(imagePath).grayscale().toFile(filterImgPath);
 export const ImgFilterController = {
   applyFilterImg: async (req: Request, res: Response) => {
     try {
-      const { filter, imageUrl, blurLevel } = req.query;
+      const { filter, imageUrl, blurLevel } = req.query as {
+        filter: string;
+        imageUrl: string;
+        blurLevel?: string;
+      };
       console.log("imageUrl", imageUrl);
       console.log("blurLevel", blurLevel);
 
