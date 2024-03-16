@@ -65,8 +65,8 @@ export const ImgResizeController = {
 
       await sharp(imagePath)
         .resize({
-          width: parseInt(width as string),
-          height: parseInt(height as string),
+          width: parseInt(width),
+          height: parseInt(height),
         })
         .toFile(resizedImagePath);
 
@@ -76,6 +76,8 @@ export const ImgResizeController = {
     }
   },
 };
+
+
 //crop Img
 export const ImgCroppedController = {
   cropImg: async (req: Request, res: Response) => {
