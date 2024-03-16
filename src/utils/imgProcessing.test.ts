@@ -23,16 +23,20 @@ jest.mock("sharp", () => {
 describe("Image controllers functions", () => {
   const app = express();
   app.use(express.json());
+ 
   test("Check uploading file image", async () => {
     const req = {
       file: {},
     };
-    const res = { send: jest.fn() };
+    const res = {
+      status: jest.fn().mockReturnThis(), 
+      json: jest.fn(),
+    };
     imgController.uploadImage(req, res);
-    expect(res.send).toHaveBeenCalledWith("uploaded image successfully");
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({ message: "uploaded image successfully" });
   });
 });
-
 //Test resize image parameters
 
 test("resize image parameters", async () => {
@@ -41,6 +45,8 @@ test("resize image parameters", async () => {
   };
   const res = {
     render: jest.fn(),
+    status: jest.fn().mockReturnThis(), 
+    json: jest.fn(),
   };
   await ImgResizeController.resizeImg(req, res);
   expect(res.render).toHaveBeenCalled(),
@@ -61,6 +67,8 @@ test("cropped image exceed the maximum size", async () => {
   };
   const res = {
     render: jest.fn(),
+    status: jest.fn().mockReturnThis(), 
+    json: jest.fn(),
   };
   await ImgCroppedController.cropImg(req, res);
   expect(res.render).toHaveBeenCalled();
@@ -75,6 +83,8 @@ test("test download and image", async () => {
   };
   const res = {
     download: jest.fn(),
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn(),
   };
   await ImgDownloadController.downloadImg(req, res);
   expect(res.download).toHaveBeenCalled();
@@ -87,6 +97,8 @@ test("image filter blur or grayscale", async () => {
   };
   const res = {
     render: jest.fn(),
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn(),
   };
   await ImgFilterController.applyFilterImg(req, res);
   expect(res.render).toHaveBeenCalled();
@@ -102,8 +114,9 @@ test("ImgWaterMArkController", async () => {
   };
   const res = {
     render: jest.fn(),
+    status: jest.fn().mockReturnThis(), 
+    json: jest.fn(),
   };
-
   await ImgWaterMArkController.waterMarkImg(req, res);
   expect(res.render).toHaveBeenCalled();
   expect(res.render.mock.calls[0][0]).toBe("detail");

@@ -12,7 +12,7 @@
   "scripts": {
     "start": "ts-node src/server.ts",
     "build": "tsc",
-    "test": "jest --watchAll"
+    "test": "jest --coverage"
   },
   "type": "commonjs",
   "devDependencies": {

@@ -1,5 +1,5 @@
 const fs = require("fs");
-import sharp from "sharp";
+const sharp =require("sharp");
 import path from "path";
 
 import { Request, Response } from 'express';
