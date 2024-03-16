@@ -1,9 +1,9 @@
 const fs = require("fs");
-const sharp =require("sharp");
-import path from "path";
+const sharp = require("sharp");
+const path = require("path"); 
+
 
 import { Request, Response } from 'express';
-
 import { BadClientReq, SuccessUserReq,BadServerReq } from "../utils/errorHandler";
 
 export const imgController = {
@@ -16,7 +16,6 @@ export const imgController = {
     return SuccessUserReq(res, "file uploaded successfully");
   },
 };
-
 //Display images
 export const getUploadedImages = (callback:Function) => {
   const uploadDir = path.join(__dirname, "../uploads");
