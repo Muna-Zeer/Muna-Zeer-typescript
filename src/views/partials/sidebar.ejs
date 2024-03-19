@@ -8,7 +8,7 @@
   <body>
     <aside class="sidebar">
       <ul>
-        <li><a href="#">Main Features</a></li>
+        <h2>Main Features</h2>
         <li>
           <form
             action="/images/upload"
@@ -47,9 +47,9 @@
         </li>
         <li>
           <a href="/images/download?imageUrl=<%=imageUrl%>">
-            <button>Image Download</button>
+              <button>Image Download</button> 
           </a>
-        </li>
+      </li>
         <li>
           <form action="/images/filter" method="get">
             <input type="hidden" name="imageUrl" value="<%= imageUrl %>" />
@@ -61,6 +61,8 @@
               min="1"
               max="10"
             />
+            <br>
+            <br>
             <button type="submit" name="filter" value="blur">Blur Img</button>
             <button type="submit" name="filter" value="grayscale">
               GrayScale Img
@@ -79,7 +81,9 @@
                 <input type="submit" value="Apply Watermark" />
             </form>
         </li>
-        
+        <br>
+        <br>
+        <br>
         
         
           

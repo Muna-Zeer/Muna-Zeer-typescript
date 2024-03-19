@@ -5,6 +5,7 @@ const path = require("path");
 
 import { Request, Response } from 'express';
 import { BadClientReq, SuccessUserReq,BadServerReq } from "../utils/errorHandler";
+import { json } from 'stream/consumers';
 
 export const imgController = {
   uploadImage: (req: Request, res: Response) => {
@@ -75,6 +76,7 @@ export const ImgResizeController = {
     }
   },
 };
+
 
 
 //crop Img
@@ -184,6 +186,8 @@ export const ImgWaterMArkController = {
       try {
           const { top, left, text, imageUrl } = req.body;
 
+          console.log("Received parameters:", { top, left, text, imageUrl });
+
           if (!top || !left || !text || !imageUrl) {
               return BadClientReq(res, "Invalid parameters or no imageUrl provided");
           }
@@ -192,6 +196,8 @@ export const ImgWaterMArkController = {
           const { imagePath, filename } = ProcessPath(imageUrl as string);
           const filterFilename = `watermark-${filename}`;
           const filterImagePath = path.join(__dirname, "../uploads", filterFilename);
+
+          console.log("Processing image:", imagePath);
 
           await sharp(imagePath)
               .composite([
@@ -202,8 +208,11 @@ export const ImgWaterMArkController = {
               ])
               .toFile(filterImagePath);
 
+          console.log("Watermark added successfully.");
+
           return res.render("detail", { imageUrl: `../uploads/${filterFilename}` });
       } catch (error) {
+          console.error("Error processing image:", error);
           return BadServerReq(res, error);
       }
   },

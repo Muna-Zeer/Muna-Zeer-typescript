@@ -5,10 +5,12 @@
     "outDir": "./dist",
     "esModuleInterop": true
   },
+ 
   "include": [
     "src/**/*.ts"
 , "src/public/script.js", "src/utils/imgProcessing.test.ts"  ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  
 }
