@@ -1,0 +1,16 @@
+version: '2.4'
+
+services:
+  app: 
+   build: 
+    context: .
+    dockerfile: Dockerfile
+   ports:
+     - "3000:3000"
+    
+   volumes:
+      - .:/usr/src/server 
+
+   environment:
+     - NODE_ENV=development  
+

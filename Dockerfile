@@ -1,6 +1,6 @@
 FROM node:20.11.1
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/server
 COPY package*.json ./
 COPY tsconfig.json ./
 RUN npm install
