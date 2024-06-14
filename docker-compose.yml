@@ -9,7 +9,9 @@ services:
      - "3000:3000"
     
    volumes:
-      - .:/usr/src/server 
+     - .:/usr/src/server
+     - /usr/src/server/node_modules
+
 
    environment:
      - NODE_ENV=development  
