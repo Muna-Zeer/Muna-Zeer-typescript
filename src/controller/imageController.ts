@@ -5,7 +5,6 @@ const path = require("path");
 
 import { Request, Response } from 'express';
 import { BadClientReq, SuccessUserReq,BadServerReq } from "../utils/errorHandler";
-import { json } from 'stream/consumers';
 
 export const imgController = {
   uploadImage: (req: Request, res: Response) => {
@@ -18,7 +17,8 @@ export const imgController = {
   },
 };
 //Display images
-export const getUploadedImages = (callback:Function) => {
+type Callback=(error:NodeJS.ErrnoException|null,filesURL:string[]|null)=>void;
+export const getUploadedImages = (callback: Callback): void => {
   const uploadDir = path.join(__dirname, "../uploads");
 
   fs.readdir(uploadDir, (err, files) => {
