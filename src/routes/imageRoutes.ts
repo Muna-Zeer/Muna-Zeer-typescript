@@ -1,6 +1,6 @@
 import express from "express";
 import { imgController,ImgResizeController,ImgCroppedController, ImgDownloadController,
-    ImgFilterController,ImgWaterMArkController
+    ImgFilterController,ImgWaterMarkController
 } from "../controller/imageController";
 
 import path from "path";
