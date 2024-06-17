@@ -5,6 +5,7 @@ services:
    build: 
     context: .
     dockerfile: Dockerfile
+   image: munaelzeer/img_processing:laest
    ports:
      - "3000:3000"
     
