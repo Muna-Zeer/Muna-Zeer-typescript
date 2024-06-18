@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "ts-node src/server.ts",
-   "build": "tsc && cp dist/server.js dist/",
+   "build": "tsc",
     "test": "jest --coverage"
   },
   "type": "commonjs",
