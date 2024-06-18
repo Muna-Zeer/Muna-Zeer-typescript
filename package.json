@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "ts-node src/server.ts",
-    "build": "tsc && [ -d src/views ] && cp -r src/views dist/views && [ -d src/partials ] && cp -r src/partials dist/partials",
+    "build": "tsc",
     "test": "jest --coverage"
   },
   "type": "commonjs",
