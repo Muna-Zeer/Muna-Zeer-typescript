@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "ts-node src/server.ts",
-    "build": "tsc && (if exist src/views xcopy src\\views dist\\views /E /I) && (if exist src/partials xcopy src\\partials dist\\partials /E /I) && (if exist src/public xcopy src\\public dist\\public /E /I) && (if exist src/uploads xcopy src\\uploads dist\\uploads /E /I)",
+    "build": "tsc && (if exist src/views xcopy src\\views dist\\views /E /I) && (if exist src/partials xcopy src\\partials dist\\partials /E /I)",
     "test": "jest --coverage"
   },
   "type": "commonjs",
