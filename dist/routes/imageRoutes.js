@@ -32,4 +32,4 @@ router.get('/download', imageController_1.ImgDownloadController.downloadImg);
 //Route for  filter the image based on the blur or grayScale
 router.get('/filter', imageController_1.ImgFilterController.applyFilterImg);
 //Route for  waterMark
-router.post('/watermark', imageController_1.ImgWaterMArkController.waterMarkImg);
+router.post('/watermark', ImgWaterMArkController.waterMarkImg);

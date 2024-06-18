@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <ul>
+        <h2>Main Features</h2>
+        <li>
+          <form
+            action="/images/upload"
+            method="post"
+            enctype="multipart/form-data"
+          >
+            <label for="imageUpload">Image Upload</label>
+            <input id="imageUpload" type="file" name="image" />
+            <input type="submit" value="Upload" />
+          </form>
+        </li>
+
+        <li>
+          <form action="/images/resize" method="post">
+            <label for="width">Width:</label>
+            <input type="text" id="width" name="width" />
+            <label for="height">Height:</label>
+            <input type="text" id="height" name="height" />
+            <input type="hidden" name="imageUrl" value="<%= imageUrl %>" />
+            <input type="submit" value="Resize" />
+          </form>
+        </li>
+        <li>
+          <form action="/images/crop" method="post">
+            <label for="width">Width:</label>
+            <input type="text" id="width" name="width" />
+            <label for="height">Height:</label>
+            <input type="text" id="height" name="height" />
+            <label for="top">Top:</label>
+            <input type="text" id="top" name="top" />
+            <label for="left">Left:</label>
+            <input type="text" id="left" name="left" />
+            <input type="hidden" name="imageUrl" value="<%= imageUrl %>" />
+            <input type="submit" value="Crop" />
+          </form>
+        </li>
+        <li>
+          <a href="/images/download?imageUrl=<%=imageUrl%>">
+              <button>Image Download</button> 
+          </a>
+      </li>
+        <li>
+          <form action="/images/filter" method="get">
+            <input type="hidden" name="imageUrl" value="<%= imageUrl %>" />
+            <label for="blurLevel">Blur Level:</label>
+            <input
+              type="number"
+              id="blurLevel"
+              name="blurLevel"
+              min="1"
+              max="10"
+            />
+            <br>
+            <br>
+            <button type="submit" name="filter" value="blur">Blur Img</button>
+            <button type="submit" name="filter" value="grayscale">
+              GrayScale Img
+            </button>
+          </form>
+        </li>
+        <li>
+            <form action="/images/watermark" method="post">
+                <input type="hidden" name="imageUrl" value="<%= imageUrl %>" />
+                <label for="watermarkText">Watermark Text:</label>
+                <input type="text" id="watermarkText" name="text" />
+                <label for="watermarkTop">Top:</label>
+                <input type="number" id="watermarkTop" name="top" />
+                <label for="watermarkLeft">Left:</label>
+                <input type="number" id="watermarkLeft" name="left" />
+                <input type="submit" value="Apply Watermark" />
+            </form>
+        </li>
+        <br>
+        <br>
+        <br>
+        
+        
+          
+      </ul>
+    </aside>
+  </body>
+</html>

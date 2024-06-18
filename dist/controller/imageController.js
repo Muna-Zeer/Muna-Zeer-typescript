@@ -8,15 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ImgWaterMArkController = exports.ImgFilterController = exports.ImgDownloadController = exports.ImgCroppedController = exports.ImgResizeController = exports.getUploadedImages = exports.imgController = void 0;
+exports.ImgWaterMarkController = exports.ImgFilterController = exports.ImgDownloadController = exports.ImgCroppedController = exports.ImgResizeController = exports.getUploadedImages = exports.imgController = void 0;
 const fs = require("fs");
 const sharp = require("sharp");
-const path_1 = __importDefault(require("path"));
+const path = require("path");
 const errorHandler_1 = require("../utils/errorHandler");
+// Image Controller
 exports.imgController = {
     uploadImage: (req, res) => {
         console.log("req.file", req.file);
@@ -26,9 +24,8 @@ exports.imgController = {
         return (0, errorHandler_1.SuccessUserReq)(res, "file uploaded successfully");
     },
 };
-//Display images
 const getUploadedImages = (callback) => {
-    const uploadDir = path_1.default.join(__dirname, "../uploads");
+    const uploadDir = path.join(__dirname, "../uploads");
     fs.readdir(uploadDir, (err, files) => {
         if (err) {
             console.error("Error reading files:", err);
@@ -39,16 +36,18 @@ const getUploadedImages = (callback) => {
     });
 };
 exports.getUploadedImages = getUploadedImages;
+// Process Path Function
 const ProcessPath = (imageUrl) => {
     if (!imageUrl) {
         throw new Error("No image URL provided");
     }
-    const imagePath = path_1.default.join(__dirname, "../", imageUrl);
+    const imagePath = path.join(__dirname, "../", imageUrl);
     console.log("imagePath", imagePath);
-    const filename = path_1.default.basename(imagePath);
+    const filename = path.basename(imagePath);
     console.log("filename", filename);
     return { imagePath, filename };
 };
+// Image Resize Controller
 exports.ImgResizeController = {
     resizeImg: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
@@ -59,7 +58,7 @@ exports.ImgResizeController = {
                 return (0, errorHandler_1.BadClientReq)(res, "Width and height are required");
             }
             const resizedFilename = `resize-${filename}`;
-            const resizedImagePath = path_1.default.join(__dirname, "../uploads", resizedFilename);
+            const resizedImagePath = path.join(__dirname, "../uploads", resizedFilename);
             yield sharp(imagePath)
                 .resize({
                 width: parseInt(width),
@@ -73,7 +72,7 @@ exports.ImgResizeController = {
         }
     }),
 };
-//crop Img
+// Image Crop Controller
 exports.ImgCroppedController = {
     cropImg: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
@@ -86,7 +85,7 @@ exports.ImgCroppedController = {
             console.log("Image URL:", imageUrl);
             const { imagePath, filename } = ProcessPath(imageUrl);
             const croppedFilename = `crop-${filename}`;
-            const croppedImagePath = path_1.default.join(__dirname, "../uploads", croppedFilename);
+            const croppedImagePath = path.join(__dirname, "../uploads", croppedFilename);
             yield sharp(imagePath)
                 .extract({
                 left: parseInt(left),
@@ -103,7 +102,7 @@ exports.ImgCroppedController = {
         }
     }),
 };
-//download Img Process
+// Image Download Controller
 exports.ImgDownloadController = {
     downloadImg: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
@@ -120,14 +119,15 @@ exports.ImgDownloadController = {
         }
     }),
 };
-//Apply blur filter to an image 
+// Apply blur filter to an image
 const applyBlurFilter = (imagePath, filterImgPath, blurLevel) => __awaiter(void 0, void 0, void 0, function* () {
     yield sharp(imagePath).blur(blurLevel).toFile(filterImgPath);
 });
-//Apply grayscale filter to an image 
+// Apply grayscale filter to an image
 const applyGrayScaleFilter = (imagePath, filterImgPath) => __awaiter(void 0, void 0, void 0, function* () {
     yield sharp(imagePath).grayscale().toFile(filterImgPath);
 });
+// Image Filter Controller
 exports.ImgFilterController = {
     applyFilterImg: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
@@ -140,7 +140,7 @@ exports.ImgFilterController = {
             console.log("Image URL:", imageUrl);
             const { imagePath, filename } = ProcessPath(imageUrl);
             const filterFilename = `filter-${filename}`;
-            const filterImagePath = path_1.default.join(__dirname, "../uploads", filterFilename);
+            const filterImagePath = path.join(__dirname, "../uploads", filterFilename);
             switch (filter) {
                 case "grayscale":
                     yield applyGrayScaleFilter(imagePath, filterImagePath);
@@ -159,17 +159,20 @@ exports.ImgFilterController = {
         }
     }),
 };
-exports.ImgWaterMArkController = {
+// Image Watermark Controller
+exports.ImgWaterMarkController = {
     waterMarkImg: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const { top, left, text, imageUrl } = req.body;
+            console.log("Received parameters:", { top, left, text, imageUrl });
             if (!top || !left || !text || !imageUrl) {
                 return (0, errorHandler_1.BadClientReq)(res, "Invalid parameters or no imageUrl provided");
             }
             console.log("Image URL:", imageUrl);
             const { imagePath, filename } = ProcessPath(imageUrl);
             const filterFilename = `watermark-${filename}`;
-            const filterImagePath = path_1.default.join(__dirname, "../uploads", filterFilename);
+            const filterImagePath = path.join(__dirname, "../uploads", filterFilename);
+            console.log("Processing image:", imagePath);
             yield sharp(imagePath)
                 .composite([
                 {
@@ -178,9 +181,11 @@ exports.ImgWaterMArkController = {
                 },
             ])
                 .toFile(filterImagePath);
+            console.log("Watermark added successfully.");
             return res.render("detail", { imageUrl: `../uploads/${filterFilename}` });
         }
         catch (error) {
+            console.error("Error processing image:", error);
             return (0, errorHandler_1.BadServerReq)(res, error);
         }
     }),

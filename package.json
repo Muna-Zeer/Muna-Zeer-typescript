@@ -11,8 +11,9 @@
     "sharp": "^0.33.2"
   },
   "scripts": {
-    "start": "ts-node src/server.ts", 
-    "build": "tsc && cp -r src/views dist/ && cp -r src/partials dist/ && cp -r src/public dist/ && cp -r src/uploads dist/",    "test": "jest --coverage"
+    "start": "ts-node src/server.ts",
+    "build": "tsc && (if exist src/views xcopy src\\views dist\\views /E /I) && (if exist src/partials xcopy src\\partials dist\\partials /E /I) && (if exist src/public xcopy src\\public dist\\public /E /I) && (if exist src/uploads xcopy src\\uploads dist\\uploads /E /I)",
+    "test": "jest --coverage"
   },
   "type": "commonjs",
   "devDependencies": {
@@ -21,6 +22,7 @@
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.26",
     "babel-jest": "^29.7.0",
+    "copyfiles": "^2.4.1",
     "jest": "^29.7.0",
     "superset": "^2.0.1",
     "ts-jest": "^29.1.2",

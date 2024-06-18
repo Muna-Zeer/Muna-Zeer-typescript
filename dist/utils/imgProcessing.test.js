@@ -34,9 +34,13 @@ describe("Image controllers functions", () => {
         const req = {
             file: {},
         };
-        const res = { send: jest.fn() };
+        const res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn(),
+        };
         imgController.uploadImage(req, res);
-        expect(res.send).toHaveBeenCalledWith("uploaded image successfully");
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({ message: "uploaded image successfully" });
     }));
 });
 //Test resize image parameters
@@ -46,6 +50,8 @@ test("resize image parameters", () => __awaiter(this, void 0, void 0, function* 
     };
     const res = {
         render: jest.fn(),
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
     };
     yield ImgResizeController.resizeImg(req, res);
     expect(res.render).toHaveBeenCalled(),
@@ -65,6 +71,8 @@ test("cropped image exceed the maximum size", () => __awaiter(this, void 0, void
     };
     const res = {
         render: jest.fn(),
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
     };
     yield ImgCroppedController.cropImg(req, res);
     expect(res.render).toHaveBeenCalled();
@@ -78,6 +86,8 @@ test("test download and image", () => __awaiter(this, void 0, void 0, function* 
     };
     const res = {
         download: jest.fn(),
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
     };
     yield ImgDownloadController.downloadImg(req, res);
     expect(res.download).toHaveBeenCalled();
@@ -89,6 +99,8 @@ test("image filter blur or grayscale", () => __awaiter(this, void 0, void 0, fun
     };
     const res = {
         render: jest.fn(),
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
     };
     yield ImgFilterController.applyFilterImg(req, res);
     expect(res.render).toHaveBeenCalled();
@@ -102,6 +114,8 @@ test("ImgWaterMArkController", () => __awaiter(this, void 0, void 0, function* (
     };
     const res = {
         render: jest.fn(),
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
     };
     yield ImgWaterMArkController.waterMarkImg(req, res);
     expect(res.render).toHaveBeenCalled();
