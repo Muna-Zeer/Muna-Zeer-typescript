@@ -12,7 +12,8 @@
   },
   "scripts": {
     "start": "ts-node src/server.ts",
-"build": "tsc && (if exist src/views xcopy src/views dist/views /E /I) && (if exist src/partials xcopy src/partials dist/partials /E /I)",    "test": "jest --coverage"
+    "build": "tsc && [ -d src/views ] && cp -r src/views dist/views && [ -d src/partials ] && cp -r src/partials dist/partials",
+    "test": "jest --coverage"
   },
   "type": "commonjs",
   "devDependencies": {
