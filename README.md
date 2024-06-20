@@ -70,22 +70,22 @@ GET /api/download
         <img src="dist/uploads/crop-resize-image-1710586229469.jpeg" alt="Crop Image" style="width: 100%; height: 200px; border: 1px solid #ccc;">
     </div>
     <div style="width: 100px;">
-        <img src="dist/uploads/filter-filter-image-1710438377533.jpeg" alt="Resize Image" style="width: 100%; height: 200px; border: 1px solid #ccc;">
+        <img src="dist/uploads/filter-filter-image-1710438377533.jpeg" alt="Resize Image" style="width: 100%; height: 400px; border: 1px solid #ccc;">
     </div>
     <div style="width: 100px;">
-        <img src="dist/uploads/filter-image-1710560298850.jpeg" alt="Blur Image" style="width: 100%; height: 200px; border: 1px solid #ccc;">
+        <img src="dist/uploads/filter-image-1710560298850.jpeg" alt="Blur Image" style="width: 100%; height: 400px; border: 1px solid #ccc;">
     </div>
     <div style="width: 100px;">
-        <img src="dist/uploads/filter-filter-resize-image-1710339829199.jpeg" alt="Blur Image" style="width: 100%; height: 200px; border: 1px solid #ccc;">
+        <img src="dist/uploads/filter-filter-resize-image-1710339829199.jpeg" alt="Blur Image" style="width: 100%; height: 400px; border: 1px solid #ccc;">
     </div>
     <div style="width: 100px;">
-        <img src="dist/uploads/filter-resize-image-1710561386621.jpeg" alt="Blur Image" style="width: 100%; height: 200px; border: 1px solid #ccc;">
+        <img src="dist/uploads/filter-resize-image-1710561386621.jpeg" alt="Blur Image" style="width: 100%; height: 400px; border: 1px solid #ccc;">
     </div>
     <div style="width: 100px;">
-        <img src="dist/uploads/filter-resize-image-1710586525387.jpeg" alt="Blur Image" style="width: 100%; height: 200px; border: 1px solid #ccc;">
+        <img src="dist/uploads/filter-resize-image-1710586525387.jpeg" alt="Blur Image" style="width: 100%; height: 400px; border: 1px solid #ccc;">
     </div>
     <div style="width: 100px;">
-        <img src="dist/uploads/filter-resize-image-1710587052093.jpeg" alt="Blur Image" style="width: 100%; height: 200px; border: 1px solid #ccc;">
+        <img src="dist/uploads/filter-resize-image-1710587052093.jpeg" alt="Blur Image" style="width: 100%; height: 400px; border: 1px solid #ccc;">
     </div>
     <div style="width: 100px;">
         <img src="dist/uploads/filter-resize-watermark-filter-filter-filter-resize-image-1710339829199.jpeg" alt="Blur Image" style="width: 100%; height: 400px; border: 1px solid #ccc;">
