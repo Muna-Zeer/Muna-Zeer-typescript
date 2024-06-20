@@ -62,4 +62,4 @@ GET /api/download
 
 **Images**
 - The images are stored in the `uploads ` folder
-![Crop Image](uploads/crop-resize-image-1710586229469.jpeg)
+![Crop Image](dist/uploads/crop-resize-image-1710586229469.jpeg)
