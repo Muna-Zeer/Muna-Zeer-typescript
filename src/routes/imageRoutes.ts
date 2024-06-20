@@ -35,5 +35,5 @@ router.get('/download',ImgDownloadController.downloadImg)
 router.get('/filter',ImgFilterController.applyFilterImg)
 
 //Route for  waterMark
-router.post('/watermark',ImgWaterMArkController.waterMarkImg)
+// router.post('/watermark',ImgWaterMArkController.waterMarkImg)
 export { router as ImgRouter };
