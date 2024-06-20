@@ -60,6 +60,8 @@ GET /api/download
 - Returns: Downloaded image file or error details.
 
 
-**Images**
-- The images are stored in the `uploads ` folder
-![Crop Image](dist/uploads/crop-resize-image-1710586229469.jpeg)
+### Images
+
+<div style="border: 1px solid #ccc; padding: 10px;">
+   ![Crop Image](uploads/crop-resize-image-1710586229469.jpeg)
+</div>
