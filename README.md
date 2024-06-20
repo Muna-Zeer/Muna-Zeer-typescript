@@ -63,5 +63,5 @@ GET /api/download
 ### Images
 
 <div style="border: 1px solid #ccc; padding: 10px;">
-   ![Crop Image](uploads/crop-resize-image-1710586229469.jpeg)
+   ![Crop Image](dist/uploads/crop-resize-image-1710586229469.jpeg)
 </div>
