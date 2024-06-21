@@ -65,7 +65,7 @@ GET /api/download
 - The images are stored in the `uploads ` folder
 
 ### Images
-
+   ![Blur Image](dist/uploads/rotate-resize-filter-filter-image-1710438377533.jpeg)
 <div style="border: 1px solid #ccc; padding: 10px; margin-right:10px;display: flex; flex-wrap: wrap; gap: 10px;">
     <div style="width: 400px;">
         <img src="dist/uploads/crop-resize-image-1710586229469.jpeg" alt="Crop Image" style="width: 100%; height: 200px; border: 1px solid #ccc;">
@@ -94,9 +94,6 @@ GET /api/download
     <div style="margin=4px;">
         <img src="dist/uploads/filter-image-1710560298850.jpeg" alt="Blur Image" style="width: 100%; height: 400px; border: 1px solid #ccc;">
     </div>
-     <div style="margin=4px;">
-        <img src="dist/uploads/rotate-image-1718982192835.jpeg" alt="Blur Image" style="width: 100%; height: 400px; border: 3px solid #ccc;">
-    </div>
     <div style="margin=4px;">
         <img src="dist/uploads/image-1710560298850.jpeg" alt="Blur Image" style="width: 100%; height: 400px; border: 1px solid #ccc;">
     </div>
@@ -109,7 +106,8 @@ GET /api/download
     <div style="margin=4px;">
         <img src="dist/uploads/image-1710586525387.jpeg" alt="Blur Image" style="width: 100%; height: 400px; border: 1px solid #ccc;">
     </div>
-   
+
+
   
 </div>
 
