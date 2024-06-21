@@ -95,7 +95,7 @@ GET /api/download
         <img src="dist/uploads/filter-image-1710560298850.jpeg" alt="Blur Image" style="width: 100%; height: 400px; border: 1px solid #ccc;">
     </div>
      <div style="margin=4px;">
-        <img src="dist/uploads/rotate-resize-filter-filter-image-1710438377533.jpeg" alt="Blur Image" style="width: 100%; height: 400px; border: 3px solid #ccc;">
+        <img src="dist/uploads/rotate-image-1718982192835.jpeg" alt="Blur Image" style="width: 100%; height: 400px; border: 3px solid #ccc;">
     </div>
     <div style="margin=4px;">
         <img src="dist/uploads/image-1710560298850.jpeg" alt="Blur Image" style="width: 100%; height: 400px; border: 1px solid #ccc;">
