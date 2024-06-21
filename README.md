@@ -10,7 +10,8 @@ The API will provide various image processing functionalities such as resizing, 
 4. **Image Download**: Users can download the processed image.
 5. **Image Filtering**: Implement various image filters such as grayscale and blur.
 6. **Watermarking**: Add a watermark to image.
-7. **Error Handling**: Implement robust error handling to handle various exceptions.
+7. **Image Rotating**: Rotate an image.
+8. **Error Handling**: Implement robust error handling to handle various exceptions.
 
 ## Technologies Used
 - Type Script
@@ -104,6 +105,9 @@ GET /api/download
     </div>
     <div style="margin=4px;">
         <img src="dist/uploads/image-1710586525387.jpeg" alt="Blur Image" style="width: 100%; height: 400px; border: 1px solid #ccc;">
+    </div>
+    <div style="margin=4px;">
+        <img src="dist/uploads/rotate-resize-filter-filter-image-1710438377533.jpeg" alt="Blur Image" style="width: 100%; height: 400px; border: 1px solid #ccc;">
     </div>
   
 </div>

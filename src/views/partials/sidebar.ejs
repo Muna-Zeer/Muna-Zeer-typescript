@@ -82,6 +82,15 @@
             </form>
         </li>
         <br>
+        <li>
+          <form action="/images/rotate" method="post"> 
+            <label for="rotateValue">Rotate Image:</label>
+            <input type="number" id="rotateValue" name="rotateValue" />
+            <input type="hidden" name="imageUrl" value="<%= imageUrl %>" />
+            <input type="submit" value="Rotate an Image" />
+          </form>
+        </li>
+        
         <br>
         <br>
         

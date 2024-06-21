@@ -1,6 +1,6 @@
 import express from "express";
 import { imgController,ImgResizeController,ImgCroppedController, ImgDownloadController,
-    ImgFilterController,ImgWaterMarkController
+    ImgFilterController,ImgWaterMarkController,ImageRotating,
 } from "../controller/imageController";
 
 import path from "path";
@@ -30,6 +30,8 @@ router.post('/crop',ImgCroppedController.cropImg)
 
 //Route for  download image processing
 router.get('/download',ImgDownloadController.downloadImg)
+//Route for  rotate image processing
+router.post('/rotate',ImageRotating.ImgRotate);
 
 //Route for  filter the image based on the blur or grayScale
 router.get('/filter',ImgFilterController.applyFilterImg)

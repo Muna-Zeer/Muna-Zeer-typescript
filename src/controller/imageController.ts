@@ -2,8 +2,16 @@ const fs = require("fs");
 const sharp = require("sharp");
 const path = require("path");
 
-import { Request, Response } from 'express';
-import { BadClientReq, SuccessUserReq, BadServerReq } from "../utils/errorHandler";
+import { Request, Response } from "express";
+import {
+  BadClientReq,
+  SuccessUserReq,
+  BadServerReq,
+} from "../utils/errorHandler";
+interface RotateRequestBody {
+  rotateValue: number;
+  imageUrl: string;
+}
 
 // Image Controller
 export const imgController = {
@@ -18,7 +26,10 @@ export const imgController = {
 };
 
 // Display images
-type Callback = (error: NodeJS.ErrnoException | null, filesURL: string[] | null) => void;
+type Callback = (
+  error: NodeJS.ErrnoException | null,
+  filesURL: string[] | null
+) => void;
 
 export const getUploadedImages = (callback: Callback): void => {
   const uploadDir = path.join(__dirname, "../uploads");
@@ -61,7 +72,11 @@ export const ImgResizeController = {
       }
 
       const resizedFilename = `resize-${filename}`;
-      const resizedImagePath = path.join(__dirname, "../uploads", resizedFilename);
+      const resizedImagePath = path.join(
+        __dirname,
+        "../uploads",
+        resizedFilename
+      );
 
       await sharp(imagePath)
         .resize({
@@ -73,6 +88,37 @@ export const ImgResizeController = {
       return res.render("detail", { imageUrl: `/uploads/${resizedFilename}` });
     } catch (error) {
       return BadServerReq(res, error);
+    }
+  },
+};
+//Rotate Image
+export const ImageRotating = {
+  ImgRotate: async (req: Request<any,any,RotateRequestBody>, res: Response) => {
+    const { rotateValue, imageUrl } = req.body;
+    const parsedRotateValue = parseInt(rotateValue, 10);
+
+    if (isNaN(parsedRotateValue)) {
+      throw new Error('rotateValue must be a valid number');
+    }
+    try {
+      const { imagePath, filename } = ProcessPath(imageUrl);
+
+      const rotatedFilename = `rotate-${filename}`;
+      const rotatedImagePath = path.join(
+        __dirname,
+        '../uploads',
+        rotatedFilename
+      );
+
+      await sharp(imagePath)
+        .rotate(parsedRotateValue, { background: { r: 0, g: 0, b: 0, alpha: 0 } })
+        .toFile(rotatedImagePath);
+
+      const rotatedImageUrl = `/uploads/${rotatedFilename}`;
+      res.status(200).json({ success: true, message:"Successful rotated your image return to main page" });
+    } catch (error) {
+      console.error('Error rotating image:', error);
+      res.status(500).json({ success: false, error: 'Internal server error' });
     }
   },
 };
@@ -91,7 +137,11 @@ export const ImgCroppedController = {
       console.log("Image URL:", imageUrl);
       const { imagePath, filename } = ProcessPath(imageUrl);
       const croppedFilename = `crop-${filename}`;
-      const croppedImagePath = path.join(__dirname, "../uploads", croppedFilename);
+      const croppedImagePath = path.join(
+        __dirname,
+        "../uploads",
+        croppedFilename
+      );
       await sharp(imagePath)
         .extract({
           left: parseInt(left as string),
@@ -128,12 +178,19 @@ export const ImgDownloadController = {
 };
 
 // Apply blur filter to an image
-const applyBlurFilter = async (imagePath: string, filterImgPath: string, blurLevel: number) => {
+const applyBlurFilter = async (
+  imagePath: string,
+  filterImgPath: string,
+  blurLevel: number
+) => {
   await sharp(imagePath).blur(blurLevel).toFile(filterImgPath);
 };
 
 // Apply grayscale filter to an image
-const applyGrayScaleFilter = async (imagePath: string, filterImgPath: string) => {
+const applyGrayScaleFilter = async (
+  imagePath: string,
+  filterImgPath: string
+) => {
   await sharp(imagePath).grayscale().toFile(filterImgPath);
 };
 
@@ -156,14 +213,22 @@ export const ImgFilterController = {
       console.log("Image URL:", imageUrl);
       const { imagePath, filename } = ProcessPath(imageUrl as string);
       const filterFilename = `filter-${filename}`;
-      const filterImagePath = path.join(__dirname, "../uploads", filterFilename);
+      const filterImagePath = path.join(
+        __dirname,
+        "../uploads",
+        filterFilename
+      );
 
       switch (filter) {
         case "grayscale":
           await applyGrayScaleFilter(imagePath, filterImagePath);
           break;
         case "blur":
-          await applyBlurFilter(imagePath, filterImagePath, parseInt(blurLevel || "0"));
+          await applyBlurFilter(
+            imagePath,
+            filterImagePath,
+            parseInt(blurLevel || "0")
+          );
           break;
         default:
           return BadClientReq(res, "Invalid filter type.");
@@ -192,14 +257,20 @@ export const ImgWaterMarkController = {
       console.log("Image URL:", imageUrl);
       const { imagePath, filename } = ProcessPath(imageUrl as string);
       const filterFilename = `watermark-${filename}`;
-      const filterImagePath = path.join(__dirname, "../uploads", filterFilename);
+      const filterImagePath = path.join(
+        __dirname,
+        "../uploads",
+        filterFilename
+      );
 
       console.log("Processing image:", imagePath);
 
       await sharp(imagePath)
         .composite([
           {
-            input: Buffer.from(`<svg><text x="${left}" y="${top}" font-family="Arial" font-size="16" fill="white">${text}</text></svg>`),
+            input: Buffer.from(
+              `<svg><text x="${left}" y="${top}" font-family="Arial" font-size="16" fill="white">${text}</text></svg>`
+            ),
             gravity: "southeast",
           },
         ])
