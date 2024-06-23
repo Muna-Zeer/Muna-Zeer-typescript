@@ -1,6 +1,6 @@
 import express from "express";
 import { imgController,ImgResizeController,ImgCroppedController, ImgDownloadController,
-    ImgFilterController,ImgWaterMarkController,ImageRotating,
+    ImgFilterController,addTextToImage,ImageRotating,
 } from "../controller/imageController";
 
 import path from "path";
@@ -37,5 +37,5 @@ router.post('/rotate',ImageRotating.ImgRotate);
 router.get('/filter',ImgFilterController.applyFilterImg)
 
 //Route for  waterMark
-// router.post('/watermark',ImgWaterMArkController.waterMarkImg)
+router.post('/watermark',addTextToImage.addText);
 export { router as ImgRouter };

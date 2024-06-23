@@ -243,45 +243,43 @@ export const ImgFilterController = {
 };
 
 // Image Watermark Controller
-export const ImgWaterMarkController = {
-  waterMarkImg: async (req: Request, res: Response) => {
-    try {
-      const { top, left, text, imageUrl } = req.body;
+export const addTextToImage={
+ addText:async(req:Request,res:Response)=>{
+  try {
+    const{textValue,imageUrl}=req.body;
+    const svgImage = `
+    <svg>
+      <style>
+        .title {  font-size: 16px; font-weight: bold; }
+      </style>
+      <text x="50%" y="50%" text-anchor="middle" class="title">${textValue}</text>
+    </svg>
+  `;
 
-      console.log("Received parameters:", { top, left, text, imageUrl });
+  //Convert SVG into Buffer
+  const svgBuffer=Buffer.from(svgImage);
+  // Extract filename and path
+  const { imagePath, filename } = ProcessPath(imageUrl);
+  const textedFilename = `texted-${filename}`;
+  const textedImagePath = path.join(
+    __dirname,
+    "../uploads",
+    textedFilename
+  );
+  await sharp(imagePath).composite([{ input: svgBuffer }]).png().toBuffer().then((outputBuffer: Buffer) => {
+    // Save the modified image to the filesystem
+    sharp(outputBuffer).toFile(textedImagePath, (err: Error) => {
+        if (err) {
+            console.error('Error saving text image:', err);
+            throw err;
+        }
+        res.render('detail', { imageUrl: `/uploads/${textedFilename}` });
+    });
+  });
 
-      if (!top || !left || !text || !imageUrl) {
-        return BadClientReq(res, "Invalid parameters or no imageUrl provided");
-      }
-
-      console.log("Image URL:", imageUrl);
-      const { imagePath, filename } = ProcessPath(imageUrl as string);
-      const filterFilename = `watermark-${filename}`;
-      const filterImagePath = path.join(
-        __dirname,
-        "../uploads",
-        filterFilename
-      );
-
-      console.log("Processing image:", imagePath);
-
-      await sharp(imagePath)
-        .composite([
-          {
-            input: Buffer.from(
-              `<svg><text x="${left}" y="${top}" font-family="Arial" font-size="16" fill="white">${text}</text></svg>`
-            ),
-            gravity: "southeast",
-          },
-        ])
-        .toFile(filterImagePath);
-
-      console.log("Watermark added successfully.");
-
-      return res.render("detail", { imageUrl: `../uploads/${filterFilename}` });
-    } catch (error) {
-      console.error("Error processing image:", error);
-      return BadServerReq(res, error);
-    }
-  },
-};
+  } catch (error) {
+    console.error('Error adding text to image:', error);
+    res.status(500).send('Error adding text to image');
+  }
+ } 
+}

@@ -65,7 +65,6 @@ GET /api/download
 - The images are stored in the `uploads ` folder
 
 ### Images
-   ![Blur Image](dist/uploads/rotate-resize-filter-filter-image-1710438377533.jpeg)
 <div style="border: 1px solid #ccc; padding: 10px; margin-right:10px;display: flex; flex-wrap: wrap; gap: 10px;">
     <div style="width: 400px;">
         <img src="dist/uploads/crop-resize-image-1710586229469.jpeg" alt="Crop Image" style="width: 100%; height: 200px; border: 1px solid #ccc;">

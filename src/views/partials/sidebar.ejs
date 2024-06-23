@@ -73,11 +73,7 @@
             <form action="/images/watermark" method="post">
                 <input type="hidden" name="imageUrl" value="<%= imageUrl %>" />
                 <label for="watermarkText">Watermark Text:</label>
-                <input type="text" id="watermarkText" name="text" />
-                <label for="watermarkTop">Top:</label>
-                <input type="number" id="watermarkTop" name="top" />
-                <label for="watermarkLeft">Left:</label>
-                <input type="number" id="watermarkLeft" name="left" />
+                <input type="text" id="watermarkText" name="textValue" />          
                 <input type="submit" value="Apply Watermark" />
             </form>
         </li>
